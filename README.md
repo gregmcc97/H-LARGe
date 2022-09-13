@@ -298,7 +298,7 @@ for i in columns_k141_* ; do grep "\<${${i/columns_/}/_$READ_SUFFIX/}\>" $ARG_CO
 (echo -en '\n' && cat ../classification_list) > heatmap_list 
 
 #make and run command for creating heatmap table, and copy the table to your heatmap output directory
-(echo paste heatmap_list && for i in k141_* ; do echo $i ; done && echo "| sed 's/\t/,/g' > ${READ_SUFFIX}_heatmap_table_gtdbtk.csv") | sed ':a;N;$!ba;s/\n/ /g' > command.txt
+(echo paste heatmap_list && for i in k141_* ; do echo $i ; done && echo "| sed 's/\t/,/g' > ${READ_SUFFIX}_heatmap_table.csv") | sed ':a;N;$!ba;s/\n/ /g' > command.txt
 parallel -j1 < command.txt
 cp ${READ_SUFFIX}_heatmap_table.csv ${HEATMAP_DIR}
 
@@ -309,7 +309,7 @@ Now you have heatmap file of ARG-host links. At this point I remove rows where n
 for file in [SAMPLE]_heatmap_table.csv ; do remove2=$(tail -n +2 $file | while read line ; do all_less=1 && for n in $(echo "$line" | cut -d"," -f2- | sed 's/,/ /g') ; do if (( $n >= 0.02 )) ; then all_less=0 ; fi ; done && if (( all_less )) ; then echo -e all_less'\t'$(echo "$line" | cut -d"," -f2- | sed 's/,/\\t/g') ; else echo $line ; fi ; done | grep "all_less" | cut -f2- | awk '{for (i=1;i<=NF;i++) sum[i]+=$i;}; END{for (i in sum) print sum[i];}' | paste -sd, ) && head -1 $file > ${file/.csv/_removed2.csv} && new=$(tail -n +2 $file | while read line ; do all_less=1 && for n in $(echo "$line" | cut -d"," -f2- | sed 's/,/ /g') ; do if (( $n >= 0.02 )) ; then all_less=0 ; fi ; done && if (( all_less )) ; then echo -e all_less'\t'$(echo "$line" | cut -d"," -f2- | sed 's/,/\\t/g') ; else echo $line ; fi ; done) && echo "${new}" | grep -v "all_less" | grep -v "Plasmid bin" | grep -v "Viral bin" | grep -v "Discarded bin" | grep -v "unbinned" >> ${file/.csv/_removed2.csv} && echo "Other",$remove2 >> ${file/.csv/_removed2.csv} && echo "${new}" | grep "Plasmid bin" >> ${file/.csv/_removed2.csv} | cat && echo "${new}" | grep "Viral bin" >> ${file/.csv/_removed2.csv} | cat && echo "${new}" | grep "Discarded bin" >> ${file/.csv/_removed2.csv} | cat && echo "${new}" | grep "unbinned" >> ${file/.csv/_removed2.csv} | cat ; done
 ```
 ## Making the heatmap
-Now you have the heatmap files, you can make a heatmap for each sample of ARG-host links. For this, I use the [pheatmap](https://github.com/raivokolde/pheatmap) in [R](https://www.r-project.org/).
+Now you have the heatmap files, you can make a heatmap for each sample of ARG-host links. For this, I use the [pheatmap](https://github.com/raivokolde/pheatmap) package in [R](https://www.r-project.org/).
 
 Make the heatmap in R:
 ```
