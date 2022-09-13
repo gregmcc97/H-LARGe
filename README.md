@@ -43,7 +43,7 @@ for i in *_1.fastq ; do prinseq-lite.pl -fastq $i -fastq2 ${i/_1.fastq/_2.fastq}
 for i in *_1_prinseq_good* ; do mv $i ${i%_1_prinseq_good_*}_derep_1.fastq ; done
 for i in *_2_prinseq_good* ; do mv $i ${i%_2_prinseq_good_*}_derep_2.fastq ; done
 ```
-Adapters are trimmed and low-quality reads filtered using Cutadapt with a fasta file of adapters [ADAPTER_FILE].fasta
+Adapters are trimmed and low-quality reads filtered using Cutadapt with a fasta file of adapters [ADAPTER_FILE].fasta. Note that `--nextseq-trim=20` is used in below command - use if library was sequenced on an instrument that uses two-color chemistry (Illumina NextSeq or NovaSeq, see [CutAdapt manual](https://cutadapt.readthedocs.io/en/stable/guide.html) for more information). If not, then change to `-q 20`.
 ```
 for i in *derep_1.fastq ; do cutadapt -j 16 --nextseq-trim=20 -b file:[ADAPTER_FILE].fasta -B file:[ADAPTER_FILE].fasta -m 60 -o ${i/derep_1.fastq/trimmed_1.fastq} -p ${i/derep_1.fastq/trimmed_2.fastq} $i ${i/_1.fastq/_2.fastq} ; done
 ```
