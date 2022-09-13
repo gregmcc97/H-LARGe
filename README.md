@@ -2,18 +2,39 @@
 _Workflow for **H**ost-**L**inkage to **A**ntimicrobial **R**esistance **Ge**nes using metagenomic 3C/Hi-C data_
 ### - version 2.0 - includes binning stage for improved classification of hosts
 
+![test image](https://cdn.freebiesupply.com/logos/large/2x/hi-c-logo-png-transparent.png)
+
 ## Software used:
 - [PrinSeq-lite](http://prinseq.sourceforge.net/manual.html#STANDALONE)
 - [Cutadapt](https://github.com/marcelm/cutadapt)
 - [Bowtie2](https://github.com/BenLangmead/bowtie2)
 - [SAMtools](https://github.com/samtools/samtools)
 - [BEDTools](https://github.com/arq5x/bedtools2)
-- [MetaPhlAn](https://github.com/biobakery/MetaPhlAn)
 - [Megahit](https://github.com/voutcn/megahit)
 - [ABRicate](https://github.com/tseemann/abricate)
 - [Burrow-Wheeler Aligner](https://github.com/lh3/bwa)
 - [CheckM](https://github.com/Ecogenomics/CheckM)
+- [GTDB-Tk](https://github.com/Ecogenomics/GTDBTk)
 - [GNU Parallel](https://www.gnu.org/software/parallel/sphinx.html)
+
+Install through conda (some clash so create separate environments):
+```
+conda install -c bioconda prinseq
+conda install -c bioconda cutadapt
+conda install -c bioconda bowtie2
+conda install -c bioconda samtools
+conda install -c bioconda bedtools
+conda install -c bioconda megahit
+conda install -c bioconda abricate
+conda install -c bioconda bwa
+conda install -c bioconda checkm-genome
+conda install -c bioconda gtdbtk
+conda install -c conda-forge parallel
+```
+For making heatmap:
+- [R](https://www.r-project.org/) - with packages:
+  - [pheatmap](https://github.com/raivokolde/pheatmap)
+  - [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html)
 
 ## Processing reads
 Reads are first deduplicated using PrinSeq-lite
@@ -295,7 +316,6 @@ Make the heatmap in R:
 #install packages:
 
 install.packages("pheatmap")
-install.packages("viridis")
 install.packages("RColorBrewer")
 
 #_________________________________________________________________
@@ -304,7 +324,6 @@ install.packages("RColorBrewer")
 
 library(pheatmap)
 library(RColorBrewer)
-library(viridis)
 
 #_________________________________________________________________
 
