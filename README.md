@@ -47,7 +47,7 @@ Adapters are trimmed and low-quality reads filtered using Cutadapt with a fasta 
 ```
 for i in *derep_1.fastq ; do cutadapt -j 16 --nextseq-trim=20 -b file:[ADAPTER_FILE].fasta -B file:[ADAPTER_FILE].fasta -m 60 -o ${i/derep_1.fastq/trimmed_1.fastq} -p ${i/derep_1.fastq/trimmed_2.fastq} $i ${i/_1.fastq/_2.fastq} ; done
 ```
-Human DNA removed following [this tutorial](https://www.metagenomics.wiki/tools/short-read/remove-host-sequences):
+Human DNA removed following [this tutorial](https://www.metagenomics.wiki/tools/short-read/remove-host-sequences). Download [human genome from NCBI](https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.40) and create Bowtie2 index called human_DB. Then:
 ```
 #human genome downloaded and bowtie2 index created
 for i in *trimmed_1.fastq ; do bowtie2 --threads 16 -x human_DB -1 $i -2 ${i/_1.fastq/_2.fastq} -S ${i/_trimmed_1.fastq/_mapped_and_unmapped.sam} ; done 
