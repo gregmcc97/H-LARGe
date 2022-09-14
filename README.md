@@ -369,7 +369,7 @@ rowlist_names <- c("Acutalibacteraceae",
                        "Unbinned"
 )
 
-#now generate the heatmap (if you don't use the custom column/row names then add # before labels_row and labels_column):
+#now generate the heatmap (if you don't use the custom column/row names then add # before labels_row and labels_col):
 
 pheatmap(
   method = c("pearson"),
