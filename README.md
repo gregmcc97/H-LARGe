@@ -1,8 +1,8 @@
 # H-LARGe
+<img src="https://cdn.freebiesupply.com/logos/large/2x/hi-c-logo-png-transparent.png" width="400">
+
 _Workflow for **H**ost-**L**inkage to **A**ntimicrobial **R**esistance **Ge**nes using metagenomic 3C/Hi-C data_
 ### - version 2.0 - includes binning stage for improved classification of hosts
-
-![test image](https://cdn.freebiesupply.com/logos/large/2x/hi-c-logo-png-transparent.png)
 
 ## Software used:
 - [PrinSeq-lite](http://prinseq.sourceforge.net/manual.html#STANDALONE)
