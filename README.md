@@ -150,7 +150,7 @@ Then using CheckM qa output table (note first grep is of first output table, sec
 ```
 grep "bin" all_bins_checkm_qa.tsv | cut -f1 | while read bin ; do if [[ $(grep -c "$bin" all_bins_checkm_qa_filtered.tsv ) == 1 ]] ; then grep "$bin" [SAMPLE]_bin_classification.tsv ; else echo -e ${bin}'\t'discarded ; fi ; done > [SAMPLE]_bin_names_full.tsv
 ```
-
+The ProxiMeta platform also gives you plasmid and viral bins. Filter these in the same way (except instead of CheckM marker gene scores, contamination = percent of plasmid bin that has mutually conflicting alignments to reference; completeness = percent of reference covered by plasmid bin - ProxiMeta gives you these scores). Also include these in the table of all contigs in same way as the genome bins.
 
 ## Mapping Hi-C reads and finding intercontig reads
 Now we can map the Hi-C reads to their respective metagenomic assembly. For mapping I use [bwa](https://github.com/lh3/bwa) using the aln and sampe commands.
