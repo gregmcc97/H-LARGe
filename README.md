@@ -138,7 +138,7 @@ to
 >- Merdibacter
 >- Agathobacter faecis
 
-Once you have renamed these, create a [SAMPLE]_bin_classification.tsv file containing two columns containing Bin_name and Bin_classification e.g.:
+Once you have renamed these, create a [SAMPLE]_bin_classification.tsv file containing two tab-separated columns containing Bin_name and Bin_classification e.g.:
 ```
 H1_bin_001  Christensenellales
 H1_bin_002  Acutalibacteraceae
