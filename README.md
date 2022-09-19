@@ -1,5 +1,5 @@
 # H-LARGe
-<img src="https://cdn.freebiesupply.com/logos/large/2x/hi-c-logo-png-transparent.png" width="400">
+<img src="/h-large-logo.png" width="800">
 
 _Workflow for **H**ost-**L**inkage to **A**ntimicrobial **R**esistance **Ge**nes using metagenomic 3C/Hi-C data_
 ### - version 2.0 - includes binning stage for improved classification of hosts
