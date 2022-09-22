@@ -274,7 +274,7 @@ cd binned
 #get list of linked contig classifications and counts. Includes links to plasmid and viral bins - if not applicable then remove:
 #also this is written for zsh - if using BASH, change ":u" to "^^" e.g. [[ "${classification^^}" == *"PLASMID"* ]]
 mkdir names
-for i in k141_* ; do cut -f1,3 $i | while read count classification ; do if [[ "${classification:u}" == *"PLASMID"* ]] ; then echo -e "${count}"'\t'"Plasmid bin" ; else if [[ "${classification:u}" == *"VMAG"* ]] ; then echo -e "${count}"'\t'"Viral bin" ; else if [[ "${classification}" == *"discarded"* ]] ; then echo -e "${count}"'\t'"Discarded bin" ; else echo -e $count'\t'$classification ; fi ; fi ; fi ; done > names/$i ; done
+for i in k141_* ; do cut -f1,4 $i | while read count classification ; do if [[ "${classification:u}" == *"PLASMID"* ]] ; then echo -e "${count}"'\t'"Plasmid bin" ; else if [[ "${classification:u}" == *"VMAG"* ]] ; then echo -e "${count}"'\t'"Viral bin" ; else if [[ "${classification}" == *"discarded"* ]] ; then echo -e "${count}"'\t'"Discarded bin" ; else echo -e $count'\t'$classification ; fi ; fi ; fi ; done > names/$i ; done
 cd names
 
 #get proportions for links to each unique classification:
