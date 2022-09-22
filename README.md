@@ -234,7 +234,7 @@ export ARG_CONTIGS=${DATASET_DIR}/${READ_SUFFIX}_arg_contigs.tsv
 export ARG_LIST=${DATASET_DIR}/${READ_SUFFIX}_arg_list
 export IS_LIST=${DATASET_DIR}/${READ_SUFFIX}_is_list
 export ASSEMBLY=${DATASET_DIR}/${READ_SUFFIX}_contigs.fa
-export CONTIGS_LIST=${ASSEMBLY_DIR}/${READ_SUFFIX}_full_contigs_list.tsv
+export CONTIGS_LIST=${DATASET_DIR}/${READ_SUFFIX}_full_contigs_list.tsv
 
 #in mapped directory:
 #find contigs linked to ARGs (individual file for each ARG, named as the ARG contig name e.g. k141_1234)
