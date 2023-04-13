@@ -96,6 +96,7 @@ Binning the contigs will allow for better host classification, as you will be cl
 Other options for Hi-C binning include:
 - [bin3C](https://github.com/cerebis/bin3C)
 - [HiCBin](https://github.com/dyxstat/HiCBin)
+
 Whatever you choose, once you have the bins, first rename them for consistency (including [SAMPLE] name):
 ```
 for i in *.fasta ; do stem=${i%*.fasta} && num=${stem##*_} && newnum=$(printf '%03d' "$num") && mv $i [SAMPLE]_bin_${newnum}.fasta ; done
