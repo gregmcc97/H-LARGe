@@ -200,6 +200,27 @@ grep ">" [ASSEMBLY].fa | cut -d" " -f1,4 | sed 's!len=!!' | sed 's/\s/\t/'g > [A
 # Output seperate sam files containing reads mapping <500 nt (within) and >500 nt (not) of the start of end of a contig:
 for i in *intercontig.sam ; do cat $i | while read -r name qual mappedto position rest ; do grep "\<${mappedto}\>" [ASSEMBLY]_contig_lengths.tsv | while read -r contig length ; do if (( $position < 501 )) ; then echo -e ${name}'\t'${qual}'\t'${mappedto}'\t'${length}'\t'${position}'\t'"${rest}" >> ${i/.sam/_within.sam} ; else if distance=$(echo "${length} - ${position}" | bc) && (( $distance < 501 )) ; then echo -e ${name}'\t'${qual}'\t'${mappedto}'\t'${length}'\t'${position}'\t'"${rest}" >> ${i/.sam/_within.sam} ; else echo -e ${name}'\t'${qual}'\t'${mappedto}'\t'${length}'\t'${position}'\t'"${rest}" >> ${i/.sam/_not.sam} ; fi ; fi ; done ; done ; done
 ```
+This step can take a while to run, it is quite inefficient - let me know if you come up with a better way of doing this. One thing I ended up doing was splitting the files up by so many lines, then running the command in parallel before combining them again:
+```
+#split file into number of lines (first count number of lines using wc -l, then calculate how many lines it would be to make e.g. 10 files)
+mkdir split
+cd split
+split -l [number of lines] ../[file name]_intercontig.sam
+
+#rename the split files
+a=1 && for i in x* ; do new=$(printf "%02d_[filename]_intercontig.sam" "$a") ; mv -i -- "$i" "$new" ; let a=a+1 ; done
+
+#create command you can run using parallel - can be a problem with all the quote marks and \t parts of the command, but this should work:
+for i in *intercontig.sam ; do echo "cat $i | while read -r name qual mappedto position rest ; do grep "'"\<$mappedto\>"'" ${i/intercontig.sam/contig_lengths.tsv} | while read -r contig length ; do if (( "'${position}'" < 501 )) ; then echo -e "'${name}'"'"\\\\t"'"'${qual}'"'"\\\\t"'"'${mappedto}'"'"\\\\t"'"'${length}'"'"\\\\t"'"'${position}'"'"\\\\t"'"'"${rest}"'" >> ${i/.sam/_within.sam} ; else if distance="'$(echo "'""'${length}'" - "'${position}'""'" | bc)'" && (( "'${distance}'" < 501 )) ; then echo -e "'${name}'"'"\\\\t"'"'${qual}'"'"\\\\t"'"'${mappedto}'"'"\\\\t"'"'${length}'"'"\\\\t"'"'${position}'"'"\\\\t"'"'"${rest}"'" >> ${i/.sam/_within.sam} ; else echo -e "'${name}'"'"\\\\t"'"'${qual}'"'"\\\\t"'"'${mappedto}'"'"\\\\t"'"'${length}'"'"\\\\t"'"'${position}'"'"\\\\t"'"'"${rest}"'" >> ${i/.sam/_not.sam} ; fi ; fi ; done ; done" ; done > paracomm.txt
+
+#run commands in parallel 
+parallel -j [number of commands to run in parallel] < paracomm.txt
+
+#combine into single files:
+for i in *_[filename]_intercontig_within.sam ; do cat $i >> [filename]_intercontig_within.sam ; done
+for i in *_[filename]_intercontig_not.sam ; do cat $i >> [filename]_intercontig_not.sam ; done
+
+```
 ## Link ARGs to hosts 
 Now we are nearly ready to links ARGs to their hosts using the Hi-C intercontig reads. First, some files need to be set up in a single directory (calling it [DATA/DIRECTORY] here) for ease of access:
 - [SAMPLE]_arg_contigs.tsv - two columns showing contig_name,ARG_name (if you have multiple ARGs on one contig, I recommend editing this file so that only one contig is listed with the ARG names in column 2 merged e.g. mph(E)_1-msr(E)_1):
