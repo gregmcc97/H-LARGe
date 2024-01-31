@@ -263,7 +263,7 @@ export CONTIGS_LIST=${DATASET_DIR}/${READ_SUFFIX}_full_contigs_list.tsv
 mkdir ${READ_SUFFIX}_linked_contigs 
 mkdir ${READ_SUFFIX}_linked_contigs/cut
 tab=$'\t'
-for i in ${READ_SUFFIX}*_intercontig_not.sam ; do cut -f1 $ARG_CONTIGS | while read contig ; do grep "$contig$tab" $i > ${READ_SUFFIX}_linked_contigs/${contig}_${i/_intercontig_not.sam/} && cat ${READ_SUFFIX}_linked_contigs/${contig}_${i/_intercontig_not.sam/} | while read line ; do column=$(echo "$line" | awk -v b="${contig}" '{for (i=1;i<=NF;i++) { if ($i == b) { print i } }}') && if [[ "${column}" == "3" ]] ; then echo "$line" | cut -f1,9 >> ${READ_SUFFIX}_linked_contigs/cut/${contig}_${i/_intercontig_not.sam/} ; else if [[ "${column}" == "9" ]] ; then echo "$line" | cut -f1,3 >> ${READ_SUFFIX}_linked_contigs/cut/${contig}_${i/_intercontig_not.sam/} ; fi ; fi ; done ; done ; done
+for i in ${READ_SUFFIX}*_intercontig_not.sam ; do cut -f1 $ARG_CONTIGS | while read contig ; do grep "$contig$tab" $i > ${READ_SUFFIX}_linked_contigs/${contig}_${i/_intercontig_not.sam/} && cat ${READ_SUFFIX}_linked_contigs/${contig}_${i/_intercontig_not.sam/} | while read line ; do column=$(echo "$line" | awk -v b="${contig}" '{for (i=1;i<=NF;i++) { if ($i == b) { print i } }}') && if [[ "${column}" == "3" ]] ; then echo "$line" | cut -f1,8 >> ${READ_SUFFIX}_linked_contigs/cut/${contig}_${i/_intercontig_not.sam/} ; else if [[ "${column}" == "8" ]] ; then echo "$line" | cut -f1,3 >> ${READ_SUFFIX}_linked_contigs/cut/${contig}_${i/_intercontig_not.sam/} ; fi ; fi ; done ; done ; done
 cd ${READ_SUFFIX}_linked_contigs/cut
 
 #remove duplicates (currently have duplicate lines for both read 1 and 2 from the same pair)
