@@ -121,7 +121,7 @@ cut -f1 all_bins_checkm_qa_filtered.tsv | while read bin ; do cp [directory/cont
 ```
 Now classify filtered bins using [GTDB-Tk](https://github.com/Ecogenomics/GTDBTk):
 ```
-gtdbtk classify_wf --cpus 16 --pplacer_cpus 16 -x fasta --genome_dir [directory/containing/filtered/bins] --out_dir [gtdbtk/output/directory]
+gtdbtk classify_wf --cpus 16 --pplacer_cpus 16 -x fasta --genome_dir [directory/containing/filtered/bins] --mash_db [directory/to/create/mashdb] --out_dir [gtdbtk/output/directory]
 ```
 GTDB-Tk output contains placeholder names and can be adjusted. This part is currently quite manual (automate as you wish) as the classifications are adjusted to personal preference. I use the lowest ranking validly named or effectively published name. 
 
