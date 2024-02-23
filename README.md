@@ -114,7 +114,7 @@ cut -f1,6,7,9,12,14 all_bins_checkm_qa.tsv > all_bins_checkm_qa_cut.tsv
 Using CheckM quality assessment, filter out low-quality bins. I used the thresholds that a bin needed to be: >50% complete, <10% contamination, and have a quality score of >50 where quality score is:
 > Completeness - 5 * Contamination
 ```
-cat all_bins_checkm_qa_cut.tsv | while IFS=$'\t' read bin complet contam size contigs n50 ; do if (( $(echo "${contam} < 10" | bc -l) )) ; then if (( $(echo "${complet} > 50" | bc -l) )) ; then qual=$(echo "$complet - 5*$contam" | bc) && if (( $(echo "$qual > 50" | bc -l) )) ; then echo -e ${bin}'\t'${complet}'\t'${contam}'\t'${qual}'\t'${size}'\t'${contigs}'\t'${n50} ; fi ; fi ; fi ; done > all_bins_checkm_qa_filtered.tsv
+cat all_bins_checkm_qa_cut.tsv | while IFS=$'\t' read bin complet contam size contigs n50 ; do if (( $(echo "${contam} <= 10" | bc -l) )) ; then if (( $(echo "${complet} >= 50" | bc -l) )) ; then qual=$(echo "$complet - 5*$contam" | bc) && if (( $(echo "$qual >= 50" | bc -l) )) ; then echo -e ${bin}'\t'${complet}'\t'${contam}'\t'${qual}'\t'${size}'\t'${contigs}'\t'${n50} ; fi ; fi ; fi ; done > all_bins_checkm_qa_filtered.tsv
 
 #use that table to get your filtered bins:
 cut -f1 all_bins_checkm_qa_filtered.tsv | while read bin ; do cp [directory/containing/bins]/${bin}.fasta [directory/for/filtered/bins] ; done
