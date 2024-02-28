@@ -179,7 +179,7 @@ cd mapped
 for i in *aligned.sam ; do samtools view -@ 16 -bSh $i > ${i/.sam/.bam} ; done
 
 #filter alignment file to get reads that map with mapping quality >20
-for i in *aligned.bam ; do samtools view -@ 16 -bh -q 20 > ${i/.bam/_filtered.bam} ; done
+for i in *aligned.bam ; do samtools view -@ 16 -bh -q 20 $i > ${i/.bam/_filtered.bam} ; done
 
 #if you want stats of how many reads mapped:
 for i in *.bam ; do samtools flagstat -@16 $i > ${i/.bam/_flagstat.txt} ; done
