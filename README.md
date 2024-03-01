@@ -228,10 +228,10 @@ Now we are nearly ready to links ARGs to their hosts using the Hi-C intercontig 
 `cut -f2,6 [ABRICATE_ARG].tsv | grep -v "SEQUENCE" > [DATA/DIRECTORY]/[SAMPLE]_arg_contigs.tsv`
 - [SAMPLE]_arg_list - file containing ARG-contig names only:
 
-`cut -f2 [ABRICATE_ARG].tsv | grep -v "SEQUENCE" > [DATA/DIRECTORY]/[SAMPLE]_arg_list`
+`cut -f2 [ABRICATE_ARG].tsv | grep -v "SEQUENCE" | sort | uniq > [DATA/DIRECTORY]/[SAMPLE]_arg_list`
 - [SAMPLE]_is_list - file containing IS element contig names only:
 
-`cut -f2 [ABRICATE_IS].tsv | grep -v "SEQUENCE" > [DATA/DIRECTORY]/[SAMPLE]_is_list`
+`cut -f2 [ABRICATE_IS].tsv | grep -v "SEQUENCE" | sort | uniq > [DATA/DIRECTORY]/[SAMPLE]_is_list`
 - [SAMPLE]_contigs.fa - assembly file:
 
 `cp [ASSEMBLY.fa] [DATA/DIRECTORY]/[SAMPLE]_contigs.fa`
