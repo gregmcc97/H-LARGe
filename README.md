@@ -223,7 +223,7 @@ for i in *_[filename]_intercontig_not.sam ; do cat $i >> [filename]_intercontig_
 ```
 ## Link ARGs to hosts 
 Now we are nearly ready to links ARGs to their hosts using the Hi-C intercontig reads. First, some files need to be set up in a single directory (calling it [DATA/DIRECTORY] here) for ease of access:
-- [SAMPLE]_arg_contigs.tsv - two columns showing contig_name,ARG_name (if you have multiple ARGs on one contig, I recommend editing this file so that only one contig is listed with the ARG names in column 2 merged e.g. mph(E)_1-msr(E)_1):
+- [SAMPLE]_arg_contigs.tsv - two columns showing contig_name,ARG_name (if you have multiple ARGs on one contig, I recommend editing this file so that only one contig is listed with the ARG names in column 2 merged e.g. mph(E)_1--msr(E)_1):
 
 `cut -f2,6 [ABRICATE_ARG].tsv | grep -v "SEQUENCE" > [DATA/DIRECTORY]/[SAMPLE]_arg_contigs.tsv`
 - [SAMPLE]_arg_list - file containing ARG-contig names only:
