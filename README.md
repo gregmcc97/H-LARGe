@@ -210,7 +210,7 @@ split -l [number of lines] ../[file name]_intercontig.sam
 #rename the split files
 a=1 && for i in x* ; do new=$(printf "%02d_[filename]_intercontig.sam" "$a") ; mv -i -- "$i" "$new" ; let a=a+1 ; done
 
-#create command you can run using parallel - can be a problem with all the quote marks and \t parts of the command, but this should work:
+#create command you can run using parallel - can be a problem with all the quote marks and \t parts of the command, but this should work (but change \\\t to \\\\t if using a zsh command line):
 for i in *intercontig.sam ; do sample=${i/_intercontig.sam/} && echo "cat $i | while read -r name qual mappedto position rest ; do grep "'"\<$mappedto\>"'" ${sample##*_}_contig_lengths.tsv | while read -r contig length ; do if (( "'${position}'" < 501 )) ; then echo -e "'${name}'"'"\\\t"'"'${qual}'"'"\\\t"'"'${mappedto}'"'"\\\t"'"'${length}'"'"\\\t"'"'${position}'"'"\\\t"'"'"${rest}"'" >> ${i/.sam/_within.sam} ; else if distance="'$(echo "'""'${length}'" - "'${position}'""'" | bc)'" && (( "'${distance}'" < 501 )) ; then echo -e "'${name}'"'"\\\t"'"'${qual}'"'"\\\t"'"'${mappedto}'"'"\\\t"'"'${length}'"'"\\\t"'"'${position}'"'"\\\t"'"'"${rest}"'" >> ${i/.sam/_within.sam} ; else echo -e "'${name}'"'"\\\t"'"'${qual}'"'"\\\t"'"'${mappedto}'"'"\\\t"'"'${length}'"'"\\\t"'"'${position}'"'"\\\t"'"'"${rest}"'" >> ${i/.sam/_not.sam} ; fi ; fi ; done ; done" ; done > paracomm.txt
 
 #run commands in parallel 
