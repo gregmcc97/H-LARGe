@@ -244,7 +244,7 @@ for i in *.fasta ; bin_classification=$(grep "\<${i/.fasta/}\>" [SAMPLE]_bin_nam
 grep ">" [ASSEMBLY].fa | cut -d" " -f1 | sed 's/>//g' > [SAMPLE]_contigs_list.tsv
 
 #Now make table showing all contigs in assembly, the bin they are in, and the classification of the bin
-cut -f1 [SAMPLE]_contigs_list.tsv | while read contig ; do if [[ $(grep -c "\<${contig}\>" [BINNED_CONTIGS_LIST].tsv) == 1 ]] ; then grep "\<${contig}\>" [BINNED_CONTIGS_LIST].tsv ; else echo -e ${contig}'\t'unbinned'\t'unbinned ; fi ; done >> [DATA/DIRECTORY]/[SAMPLE]_full_contigs_list.tsv ; done
+cut -f1 [SAMPLE]_contigs_list.tsv | while read contig ; do if [[ $(grep -c "\<${contig}\>" [BINNED_CONTIGS_LIST].tsv) == 1 ]] ; then grep "\<${contig}\>" [BINNED_CONTIGS_LIST].tsv ; else echo -e ${contig}'\t'unbinned'\t'unbinned ; fi ; done >> [DATA/DIRECTORY]/[SAMPLE]_full_contigs_list.tsv
 ```
 Once you have these files set up, you are ready to link ARGs to their hosts using the filtered intercontig reads sam file:
 ```
