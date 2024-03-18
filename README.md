@@ -238,7 +238,7 @@ Now we are nearly ready to links ARGs to their hosts using the Hi-C intercontig 
 - [SAMPLE]_full_contigs_list.tsv - file showing classification for each contig. Columns showing contig_name,bin_name,bin_classification:
 ```
 #Firt get list of all binned contigs, what bin they are in, and the classification of that bin (including "discarded"). In directory containing all bins:
-for i in *.fasta ; bin_classification=$(grep "\<${i/.fasta/}\>" [SAMPLE]_bin_names_full.tsv) && grep ">" $i | while read contig ; do echo -e ${contig/>/}'\t'"${bin_classification}" ; done ; done > [BINNED_CONTIGS_LIST].tsv
+for i in *.fasta ; do bin_classification=$(grep "\<${i/.fasta/}\>" [SAMPLE]_bin_names_full.tsv) && grep ">" $i | while read contig ; do echo -e ${contig/>/}'\t'"${bin_classification}" ; done ; done > [BINNED_CONTIGS_LIST].tsv
 
 #Then get list of ALL contigs in assembly:
 grep ">" [ASSEMBLY].fa | cut -d" " -f1 | sed 's/>//g' > [SAMPLE]_contigs_list.tsv
